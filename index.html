@@ -1,0 +1,3154 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>UZCHESS — To'dako'l Chess Tournament 2025</title>
+    <meta name="description" content="Official registration for UZCHESS To'dako'l Chess Tournament">
+    <script>
+        (function() {
+            var s = localStorage.getItem('uzchess_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', s);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           TOKENS
+           ============================================================ */
+        :root {
+            --bg: #0D0B08;
+            --bg2: #131009;
+            --bg3: #1A160F;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-md: rgba(255, 255, 255, 0.06);
+            --surface-hi: rgba(255, 255, 255, 0.10);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hi: rgba(255, 255, 255, 0.16);
+            --text: #EDE5D0;
+            --text-muted: #8A8070;
+            --text-dim: #5A5248;
+            --red: #9B1D2E;
+            --red-hi: #C02538;
+            --red-soft: rgba(155, 29, 46, 0.18);
+            --gold: #C9A84C;
+            --gold-hi: #E8C46A;
+            --gold-soft: rgba(201, 168, 76, 0.15);
+            --success: #4A9B6F;
+            --success-soft: rgba(74, 155, 111, 0.15);
+            --danger: #C04040;
+            --danger-soft: rgba(192, 64, 64, 0.15);
+            --shadow: rgba(0, 0, 0, 0.7);
+            --ff-display: 'Playfair Display', Georgia, serif;
+            --ff-body: 'DM Sans', system-ui, sans-serif;
+            --ff-mono: 'IBM Plex Mono', monospace;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --header-h: 66px;
+            --liquid-blur: blur(40px) saturate(180%);
+            --liquid-border: rgba(255, 255, 255, 0.07);
+            --liquid-highlight: rgba(255, 255, 255, 0.04);
+        }
+        :root[data-theme="light"] {
+            --bg: #F2EDE2;
+            --bg2: #E8E0CC;
+            --bg3: #FFFFFF;
+            --surface: rgba(0, 0, 0, 0.025);
+            --surface-md: rgba(0, 0, 0, 0.05);
+            --surface-hi: rgba(0, 0, 0, 0.08);
+            --border: rgba(0, 0, 0, 0.09);
+            --border-hi: rgba(0, 0, 0, 0.18);
+            --text: #1C1710;
+            --text-muted: #7A7060;
+            --text-dim: #ADA090;
+            --red: #8B1A2A;
+            --red-hi: #A82233;
+            --red-soft: rgba(139, 26, 42, 0.10);
+            --gold: #A07B20;
+            --gold-hi: #C9A030;
+            --gold-soft: rgba(160, 123, 32, 0.12);
+            --success: #2D7A50;
+            --success-soft: rgba(45, 122, 80, 0.12);
+            --danger: #A03030;
+            --danger-soft: rgba(160, 48, 48, 0.10);
+            --shadow: rgba(0, 0, 0, 0.10);
+            --liquid-border: rgba(0, 0, 0, 0.06);
+            --liquid-highlight: rgba(255, 255, 255, 0.5);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--ff-body);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100svh;
+        }
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--ff-display);
+            line-height: 1.1;
+        }
+        button,
+        input,
+        select,
+        label,
+        textarea {
+            font-family: inherit;
+            color: inherit;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        @media(prefers-reduced-motion:reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+                animation: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* scroll margin for sticky header */
+        #about,
+        #categories,
+        #schedule,
+        #register,
+        #faq,
+        #top {
+            scroll-margin-top: calc(var(--header-h) + 20px);
+        }
+
+        /* ============================================================
+           SCROLLBAR
+           ============================================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-hi);
+            border-radius: 3px;
+        }
+
+        /* ============================================================
+           NOISE OVERLAY
+           ============================================================ */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: .025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 128px;
+        }
+
+        /* ============================================================
+           CHESS BOARD BACKGROUND
+           ============================================================ */
+        #chessBg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .chess-grid {
+            position: absolute;
+            inset: -20px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            transform: perspective(900px) rotateX(28deg) rotateZ(8deg) scale(1.6);
+            transform-origin: 50% 80%;
+            opacity: 0;
+            transition: opacity 1.2s var(--ease-out);
+            will-change: transform;
+        }
+        .chess-grid.visible {
+            opacity: .35;
+        }
+        [data-theme="light"] .chess-grid.visible {
+            opacity: .12;
+        }
+        .chess-cell {
+            width: 100%;
+            height: 100%;
+            transition: opacity 1.2s ease;
+        }
+        .chess-cell.light {
+            background: rgba(201, 168, 76, .18);
+        }
+        .chess-cell.dark {
+            background: rgba(155, 29, 46, .12);
+        }
+
+        /* ============================================================
+           FLOATING CHESS PIECES (hero background)
+           ============================================================ */
+        .floating-piece {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            will-change: transform;
+        }
+        .floating-piece.visible {
+            opacity: 0.06;
+            transition: opacity 2s var(--ease-out) 1s;
+        }
+        [data-theme="light"] .floating-piece.visible {
+            opacity: 0.04;
+        }
+        .floating-piece svg {
+            width: 100%;
+            height: 100%;
+            color: var(--gold);
+        }
+        .fp-king {
+            width: clamp(50px, 8vw, 90px);
+            height: clamp(50px, 8vw, 90px);
+            top: 15%;
+            left: 8%;
+            animation: floatSlow 28s ease-in-out infinite;
+        }
+        .fp-queen {
+            width: clamp(44px, 7vw, 78px);
+            height: clamp(44px, 7vw, 78px);
+            top: 55%;
+            right: 7%;
+            animation: floatSlow 32s ease-in-out infinite 4s;
+        }
+        .fp-knight {
+            width: clamp(40px, 6vw, 68px);
+            height: clamp(40px, 6vw, 68px);
+            top: 25%;
+            right: 18%;
+            animation: floatSlow 36s ease-in-out infinite 8s;
+        }
+        @keyframes floatSlow {
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(12px, -18px) rotate(2deg);
+            }
+            50% {
+                transform: translate(-6px, -28px) rotate(-1deg);
+            }
+            75% {
+                transform: translate(-14px, -8px) rotate(1deg);
+            }
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            padding: 0 clamp(16px, 4vw, 32px);
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13, 11, 8, 0.55);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-bottom: 1px solid var(--liquid-border);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 8px 32px rgba(0, 0, 0, 0.25);
+            transition: background .4s, box-shadow .4s;
+        }
+        [data-theme="light"] .site-header {
+            background: rgba(242, 237, 226, 0.65);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .brand__logo {
+            width: 36px;
+            height: 36px;
+            background: var(--red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ff-mono);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 1px rgba(155, 29, 46, .6), 0 4px 12px rgba(155, 29, 46, .4);
+            transition: transform .2s var(--ease-out), box-shadow .2s;
+        }
+        .brand:hover .brand__logo {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 1px rgba(192, 37, 56, .7), 0 6px 20px rgba(155, 29, 46, .5);
+        }
+        .brand__text {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .brand__name {
+            font-family: var(--ff-mono);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            line-height: 1;
+        }
+        .brand__sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: .05em;
+            line-height: 1.4;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: color .2s, background .2s;
+            cursor: pointer;
+        }
+        .nav-link:hover {
+            color: var(--text);
+            background: var(--surface-md);
+        }
+        @media(max-width:768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* hamburger */
+        .hamburger {
+            display: none;
+            appearance: none;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 9px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            transition: border-color .2s, background .2s;
+        }
+        .hamburger:hover {
+            border-color: var(--border-hi);
+            background: var(--surface-md);
+        }
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background: var(--text);
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform .3s var(--ease-out), opacity .2s;
+        }
+        .hamburger span:nth-child(1) {
+            top: 12px;
+        }
+        .hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hamburger span:nth-child(3) {
+            bottom: 12px;
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: translate(-50%, 6px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translate(-50%, -6px) rotate(-45deg);
+        }
+        @media(max-width:768px) {
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* mobile nav overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 190;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .35s var(--ease-out);
+        }
+        .mobile-nav-overlay.open {
+            pointer-events: auto;
+            opacity: 1;
+        }
+        .mobile-nav-bg {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .mobile-nav-panel {
+            position: absolute;
+            top: var(--header-h);
+            left: 0;
+            right: 0;
+            background: rgba(13, 11, 8, 0.75);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-bottom: 1px solid var(--liquid-border);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 16px 48px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transform: translateY(-16px);
+            transition: transform .35s var(--ease-out);
+        }
+        [data-theme="light"] .mobile-nav-panel {
+            background: rgba(242, 237, 226, 0.8);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+        .mobile-nav-overlay.open .mobile-nav-panel {
+            transform: translateY(0);
+        }
+        .mobile-nav-link {
+            display: block;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .mobile-nav-link:hover {
+            background: var(--surface-md);
+        }
+
+        /* lang switch */
+        .lang-switch {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            overflow: hidden;
+            padding: 2px;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .lang-btn {
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-family: var(--ff-mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            padding: 5px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background .15s, color .15s;
+        }
+        .lang-btn[aria-pressed="true"] {
+            background: var(--red);
+            color: #fff;
+        }
+        .theme-btn {
+            appearance: none;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 9px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            transition: color .2s, border-color .2s, background .2s, transform .15s;
+        }
+        .theme-btn:hover {
+            color: var(--text);
+            border-color: var(--border-hi);
+            background: var(--surface-md);
+            transform: scale(1.05);
+        }
+        .theme-btn:active {
+            transform: scale(.95);
+        }
+        .theme-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .icon-moon {
+            display: none;
+        }
+        [data-theme="dark"] .icon-sun {
+            display: none;
+        }
+        [data-theme="dark"] .icon-moon {
+            display: block;
+        }
+
+        /* telegram CTA nav */
+        .cta-nav {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 16px;
+            cursor: pointer;
+            transition: background .2s, transform .15s, box-shadow .2s;
+            box-shadow: 0 0 0 1px rgba(155, 29, 46, .5), 0 4px 14px rgba(155, 29, 46, .3);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            flex-shrink: 0;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .cta-nav:hover {
+            background: var(--red-hi);
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 1px rgba(192, 37, 56, .7), 0 8px 24px rgba(155, 29, 46, .45);
+        }
+        .cta-nav:active {
+            transform: scale(.95);
+        }
+        .cta-nav svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        @media(max-width:480px) {
+            .cta-nav {
+                padding: 8px 12px;
+                font-size: 11px;
+                gap: 5px;
+                border-radius: 8px;
+            }
+            .cta-nav svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(80px, 12vh, 100px) clamp(16px, 5vw, 24px) clamp(60px, 10vh, 80px);
+            overflow: hidden;
+        }
+        .hero__radial {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(ellipse 70% 60% at 30% 40%, rgba(155, 29, 46, .22) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 70% 60%, rgba(201, 168, 76, .1) 0%, transparent 60%), radial-gradient(ellipse 80% 100% at 50% 100%, rgba(13, 11, 8, 1) 0%, transparent 50%);
+        }
+        [data-theme="light"] .hero__radial {
+            background: radial-gradient(ellipse 70% 60% at 30% 40%, rgba(139, 26, 42, .08) 0%, transparent 70%), radial-gradient(ellipse 80% 100% at 50% 100%, rgba(242, 237, 226, 1) 0%, transparent 50%);
+        }
+        .hero__content {
+            position: relative;
+            z-index: 2;
+            max-width: 780px;
+            text-align: center;
+        }
+        .hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--ff-mono);
+            font-size: clamp(10px, 2vw, 11px);
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            padding: 6px 14px;
+            background: var(--gold-soft);
+            border: 1px solid rgba(201, 168, 76, .25);
+            border-radius: 100px;
+            margin-bottom: clamp(20px, 3vh, 28px);
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s var(--ease-out) .3s, transform .7s var(--ease-out) .3s;
+        }
+        .hero__eyebrow.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero__eyebrow::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: .5;
+                transform: scale(.7);
+            }
+        }
+        .hero__title {
+            font-size: clamp(42px, 8vw, 90px);
+            font-weight: 900;
+            line-height: .95;
+            letter-spacing: -.03em;
+            margin-bottom: 6px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .8s var(--ease-out) .45s, transform .8s var(--ease-out) .45s;
+        }
+        .hero__title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero__title em {
+            font-style: italic;
+            color: var(--red);
+            display: block;
+        }
+        [data-theme="light"] .hero__title em {
+            color: var(--red-hi);
+        }
+        .hero__title-sub {
+            font-family: var(--ff-display);
+            font-size: clamp(22px, 4vw, 44px);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s var(--ease-out) .55s, transform .7s var(--ease-out) .55s;
+            margin-bottom: clamp(18px, 3vh, 24px);
+        }
+        .hero__title-sub.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero__meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(12px, 3vw, 20px);
+            flex-wrap: wrap;
+            margin-bottom: clamp(32px, 5vh, 48px);
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease-out) .65s, transform .7s var(--ease-out) .65s;
+        }
+        .hero__meta.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero__badge {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: clamp(11px, 2vw, 13px);
+            color: var(--text-muted);
+        }
+        .hero__badge svg {
+            width: 14px;
+            height: 14px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .hero__sep {
+            width: 3px;
+            height: 3px;
+            background: var(--border-hi);
+            border-radius: 50%;
+        }
+        .hero__actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .7s var(--ease-out) .75s, transform .7s var(--ease-out) .75s;
+        }
+        .hero__actions.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: clamp(14px, 2.5vw, 16px);
+            font-weight: 600;
+            padding: clamp(14px, 2vw, 16px) clamp(20px, 4vw, 28px);
+            cursor: pointer;
+            transition: background .2s, transform .2s var(--ease-spring), box-shadow .2s;
+            box-shadow: 0 0 0 1px rgba(155, 29, 46, .6), 0 8px 30px rgba(155, 29, 46, .45);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .12) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .btn-primary:hover {
+            background: var(--red-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 0 0 1px rgba(192, 37, 56, .7), 0 14px 40px rgba(155, 29, 46, .55);
+        }
+        .btn-primary:active {
+            transform: scale(.96);
+            transition: transform .1s;
+        }
+        .btn-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-md);
+            color: var(--text);
+            border: 1px solid var(--border-hi);
+            border-radius: 14px;
+            font-size: clamp(13px, 2vw, 15px);
+            font-weight: 500;
+            padding: clamp(13px, 2vw, 15px) clamp(18px, 3vw, 24px);
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background .2s, border-color .2s, transform .2s var(--ease-spring);
+        }
+        .btn-secondary:hover {
+            background: var(--surface-hi);
+            border-color: var(--border-hi);
+            transform: translateY(-2px);
+        }
+        .btn-secondary:active {
+            transform: scale(.96);
+            transition: transform .1s;
+        }
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: clamp(24px, 4vh, 36px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            font-size: 11px;
+            letter-spacing: .08em;
+            font-family: var(--ff-mono);
+            opacity: 0;
+            transition: opacity .7s var(--ease-out) 1s;
+        }
+        .scroll-hint.visible {
+            opacity: 1;
+        }
+        .scroll-hint__track {
+            width: 20px;
+            height: 32px;
+            border: 1.5px solid var(--border-hi);
+            border-radius: 100px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 4px;
+        }
+        .scroll-hint__dot {
+            width: 4px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 100px;
+            animation: scrollDot 2s ease infinite;
+        }
+        @keyframes scrollDot {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================================
+           SECTIONS GLOBAL
+           ============================================================ */
+        .section {
+            padding: clamp(50px, 8vh, 80px) clamp(16px, 5vw, 24px);
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .section-sm {
+            padding: clamp(40px, 6vh, 60px) clamp(16px, 5vw, 24px);
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .section__label {
+            font-family: var(--ff-mono);
+            font-size: clamp(10px, 1.8vw, 11px);
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .section__title {
+            font-size: clamp(26px, 5vw, 42px);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .section__desc {
+            color: var(--text-muted);
+            font-size: clamp(14px, 2.2vw, 16px);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+           STATS STRIP
+           ============================================================ */
+        .stats-strip {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: clamp(28px, 5vh, 40px) clamp(16px, 5vw, 24px);
+        }
+        .stats-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0;
+        }
+        .stat {
+            text-align: center;
+            padding: 16px;
+            border-right: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px) scale(.96);
+            transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+        }
+        .stat:last-child {
+            border-right: none;
+        }
+        .stat.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .stat__num {
+            font-family: var(--ff-display);
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--gold-hi), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat__label {
+            font-size: clamp(10px, 1.6vw, 12px);
+            color: var(--text-muted);
+            margin-top: 6px;
+            letter-spacing: .04em;
+        }
+        @media(max-width:480px) {
+            .stat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 14px 10px;
+            }
+            .stat:last-child {
+                border-bottom: none;
+            }
+            .stats-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ============================================================
+           ABOUT SECTION
+           ============================================================ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(16px, 3vw, 32px);
+            margin-top: clamp(32px, 5vh, 48px);
+        }
+        @media(max-width:640px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--liquid-border);
+            border-radius: 18px;
+            padding: clamp(20px, 3vw, 28px);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: border-color .3s, transform .3s var(--ease-spring), box-shadow .3s;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px) scale(.96);
+            will-change: transform, opacity;
+        }
+        .glass-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .glass-card:hover {
+            border-color: var(--border-hi);
+            transform: translateY(-4px);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 16px 48px rgba(0, 0, 0, 0.25);
+        }
+        [data-theme="light"] .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="light"] .glass-card:hover {
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 16px 48px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card__icon {
+            width: 44px;
+            height: 44px;
+            background: var(--red-soft);
+            border: 1px solid rgba(155, 29, 46, .3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .glass-card__icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--red);
+        }
+        [data-theme="light"] .glass-card__icon svg {
+            color: var(--red-hi);
+        }
+        .glass-card__title {
+            font-size: clamp(15px, 2.5vw, 17px);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .glass-card__text {
+            font-size: clamp(13px, 2vw, 14px);
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        /* ============================================================
+           CATEGORIES
+           ============================================================ */
+        .cats-section {
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+            padding: clamp(50px, 8vh, 80px) clamp(16px, 5vw, 24px);
+        }
+        .cats-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .cats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(10px, 2vw, 16px);
+            margin-top: clamp(32px, 5vh, 48px);
+        }
+        .cat-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: clamp(18px, 3vw, 24px) clamp(14px, 2.5vw, 20px);
+            background: var(--surface);
+            cursor: pointer;
+            transition: border-color .3s, transform .3s var(--ease-spring), box-shadow .3s;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px) scale(.96);
+            will-change: transform, opacity;
+        }
+        .cat-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .cat-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--red-soft), transparent);
+            opacity: 0;
+            transition: opacity .35s;
+            pointer-events: none;
+        }
+        .cat-card:hover {
+            border-color: rgba(155, 29, 46, .5);
+            transform: translateY(-5px);
+            box-shadow: 0 14px 44px rgba(155, 29, 46, .18);
+        }
+        .cat-card:hover::after {
+            opacity: 1;
+        }
+        .cat-card:active {
+            transform: scale(.97);
+            transition: transform .1s;
+        }
+        .cat-card__age {
+            font-family: var(--ff-mono);
+            font-size: clamp(9px, 1.5vw, 11px);
+            font-weight: 600;
+            letter-spacing: .1em;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+        .cat-card__name {
+            font-size: clamp(16px, 2.5vw, 19px);
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-family: var(--ff-display);
+        }
+        .cat-card__range {
+            font-size: clamp(11px, 1.8vw, 13px);
+            color: var(--text-muted);
+        }
+        .cat-card__num {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-family: var(--ff-mono);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 600;
+            color: var(--border-hi);
+            line-height: 1;
+            transition: color .35s;
+        }
+        .cat-card:hover .cat-card__num {
+            color: rgba(155, 29, 46, .3);
+        }
+        @media(max-width:480px) {
+            .cats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .cat-card {
+                padding: 14px 12px;
+                border-radius: 14px;
+            }
+            .cat-card__num {
+                font-size: 24px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* ============================================================
+           TIMELINE
+           ============================================================ */
+        .timeline-section {
+            padding: clamp(50px, 8vh, 80px) clamp(16px, 5vw, 24px);
+        }
+        .timeline-inner {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .timeline {
+            margin-top: clamp(32px, 5vh, 48px);
+            position: relative;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--red) 0%, var(--border) 100%);
+        }
+        .timeline-item {
+            display: flex;
+            gap: clamp(16px, 3vw, 24px);
+            margin-bottom: clamp(20px, 3vh, 32px);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity .55s var(--ease-out), transform .55s var(--ease-out);
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            transition: border-color .35s, background .35s, box-shadow .35s;
+        }
+        .timeline-item.active .timeline-dot {
+            border-color: var(--red);
+            background: var(--red-soft);
+            box-shadow: 0 0 20px rgba(155, 29, 46, .25);
+        }
+        .timeline-dot svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-dim);
+        }
+        .timeline-item.active .timeline-dot svg {
+            color: var(--red);
+        }
+        [data-theme="light"] .timeline-item.active .timeline-dot svg {
+            color: var(--red-hi);
+        }
+        .timeline-body {
+            padding-top: 8px;
+        }
+        .timeline-body__date {
+            font-family: var(--ff-mono);
+            font-size: clamp(10px, 1.6vw, 11px);
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        .timeline-item.active .timeline-body__date {
+            color: var(--gold);
+        }
+        .timeline-body__title {
+            font-size: clamp(14px, 2.2vw, 16px);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .timeline-body__desc {
+            font-size: clamp(12px, 1.8vw, 13px);
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           REGISTRATION FORM
+           ============================================================ */
+        .form-section {
+            padding: clamp(50px, 8vh, 80px) clamp(16px, 5vw, 24px) clamp(70px, 10vh, 100px);
+            position: relative;
+        }
+        .form-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(155, 29, 46, .12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .form-wrap {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .reg-form {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(14px, 2vw, 20px);
+            margin-top: clamp(32px, 5vh, 44px);
+        }
+        .reg-form[hidden] {
+            display: none;
+        }
+        .form-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .form-progress__step {
+            flex: 1;
+            height: 3px;
+            border-radius: 100px;
+            background: var(--border);
+            transition: background .5s;
+        }
+        .form-progress__step.done {
+            background: var(--red);
+        }
+        .form-progress__step.active {
+            background: var(--gold);
+        }
+
+        /* fcard — liquid glass */
+        .fcard {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--liquid-border);
+            border-radius: 18px;
+            padding: clamp(18px, 3vw, 26px);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: border-color .3s, box-shadow .3s;
+        }
+        [data-theme="light"] .fcard {
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+        .fcard:focus-within {
+            border-color: var(--border-hi);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 12px 40px rgba(0, 0, 0, 0.18), 0 0 0 4px var(--red-soft);
+        }
+        [data-theme="light"] .fcard:focus-within {
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 12px 40px rgba(0, 0, 0, 0.08), 0 0 0 4px var(--red-soft);
+        }
+        .fcard legend {
+            font-family: var(--ff-mono);
+            font-size: clamp(10px, 1.6vw, 11px);
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .fcard legend::before {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 2px;
+            background: var(--red);
+            border-radius: 1px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .field+.field {
+            margin-top: 14px;
+        }
+        .field__label {
+            font-size: clamp(12px, 2vw, 13px);
+            font-weight: 600;
+            letter-spacing: .02em;
+        }
+        .field__input {
+            appearance: none;
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(11px, 2vw, 13px) 15px;
+            font-size: clamp(14px, 2.2vw, 16px);
+            color: var(--text);
+            transition: border-color .2s, box-shadow .2s, background .2s;
+            outline: none;
+        }
+        [data-theme="light"] .field__input {
+            background: rgba(255, 255, 255, .8);
+        }
+        .field__input::placeholder {
+            color: var(--text-dim);
+        }
+        .field__input:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 4px var(--red-soft), 0 0 20px rgba(155, 29, 46, .1);
+        }
+        .field__input[aria-invalid="true"] {
+            border-color: var(--danger);
+            background: var(--danger-soft);
+            box-shadow: 0 0 0 4px var(--danger-soft);
+        }
+        select.field__input {
+            cursor: pointer;
+            padding-right: 38px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%238A8070' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 13px center;
+        }
+        .field__error {
+            font-size: 12px;
+            color: var(--danger);
+            display: none;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+        .field__error.is-visible {
+            display: flex;
+        }
+        .field__error svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+        }
+        .seg {
+            display: flex;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            width: fit-content;
+        }
+        .seg input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+        }
+        .seg label {
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background .2s, color .2s;
+            user-select: none;
+        }
+        .seg label:not(:last-of-type) {
+            border-right: 1px solid var(--border);
+        }
+        .seg input:checked+label {
+            background: var(--red);
+            color: #fff;
+        }
+        .chk {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 3px 0;
+        }
+        .chk input {
+            width: 18px;
+            height: 18px;
+            margin-top: 1px;
+            flex-shrink: 0;
+            accent-color: var(--red);
+            cursor: pointer;
+        }
+        .chk--lg {
+            font-size: clamp(13px, 2.2vw, 15px);
+            line-height: 1.5;
+        }
+        .submit-btn {
+            appearance: none;
+            border: none;
+            background: var(--red);
+            color: #fff;
+            font-size: clamp(14px, 2.5vw, 16px);
+            font-weight: 700;
+            padding: clamp(14px, 2vw, 17px);
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background .2s, transform .2s var(--ease-spring), box-shadow .2s;
+            box-shadow: 0 0 0 1px rgba(155, 29, 46, .6), 0 8px 28px rgba(155, 29, 46, .4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: .02em;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .submit-btn:hover {
+            background: var(--red-hi);
+            transform: translateY(-3px);
+            box-shadow: 0 0 0 1px rgba(192, 37, 56, .7), 0 14px 40px rgba(155, 29, 46, .5);
+        }
+        .submit-btn:active {
+            transform: scale(.96);
+            transition: transform .1s;
+        }
+        .submit-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ============================================================
+           SUCCESS PANEL
+           ============================================================ */
+        .success-panel[hidden] {
+            display: none;
+        }
+        .success-panel {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--liquid-border);
+            border-radius: 22px;
+            padding: clamp(36px, 6vh, 56px) clamp(20px, 5vw, 32px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            box-shadow: 0 1px 0 var(--liquid-highlight), 0 12px 40px rgba(0, 0, 0, 0.2);
+            animation: riseIn .55s var(--ease-out) both;
+            position: relative;
+            overflow: hidden;
+        }
+        [data-theme="light"] .success-panel {
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+        .success-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, var(--success-soft), transparent);
+            pointer-events: none;
+        }
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .success-panel__checkmark {
+            width: 64px;
+            height: 64px;
+            background: var(--success-soft);
+            border: 1.5px solid rgba(74, 155, 111, .4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            margin-bottom: 4px;
+            animation: checkPop .55s .25s var(--ease-spring) both;
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes checkPop {
+            from {
+                opacity: 0;
+                transform: scale(.4);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .success-panel__checkmark svg {
+            width: 28px;
+            height: 28px;
+        }
+        .success-panel__title {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            font-family: var(--ff-display);
+            position: relative;
+            z-index: 1;
+        }
+        .success-panel__text {
+            color: var(--text-muted);
+            font-size: clamp(13px, 2.2vw, 15px);
+            max-width: 420px;
+            line-height: 1.65;
+            position: relative;
+            z-index: 1;
+        }
+        .success-panel__ref {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 14px 24px;
+            background: var(--success-soft);
+            border: 1px solid rgba(74, 155, 111, .25);
+            border-radius: 14px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: .04em;
+            position: relative;
+            z-index: 1;
+        }
+        .success-panel__ref strong {
+            font-family: var(--ff-mono);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: .06em;
+        }
+        .success-back {
+            appearance: none;
+            border: 1px solid var(--border);
+            background: transparent;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 11px 20px;
+            cursor: pointer;
+            transition: background .2s, color .2s, transform .15s;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .success-back:hover {
+            background: var(--surface-md);
+            color: var(--text);
+            transform: translateY(-1px);
+        }
+        .success-back:active {
+            transform: scale(.96);
+        }
+
+        /* confetti canvas */
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 300;
+        }
+
+        /* ============================================================
+           FAQ SECTION
+           ============================================================ */
+        .faq-section {
+            padding: clamp(50px, 8vh, 80px) clamp(16px, 5vw, 24px);
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+        }
+        .faq-inner {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .faq-list {
+            margin-top: clamp(32px, 5vh, 44px);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color .25s;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .faq-item.open {
+            border-color: var(--border-hi);
+        }
+        .faq-q {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: clamp(14px, 2vw, 18px) clamp(14px, 2.5vw, 20px);
+            cursor: pointer;
+            font-size: clamp(13px, 2.2vw, 15px);
+            font-weight: 600;
+            user-select: none;
+            list-style: none;
+            transition: background .2s;
+        }
+        .faq-q:hover {
+            background: var(--surface-md);
+        }
+        .faq-q::-webkit-details-marker {
+            display: none;
+        }
+        .faq-chevron {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            color: var(--text-dim);
+            transition: transform .35s var(--ease-out), color .25s;
+        }
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+            color: var(--gold);
+        }
+        .faq-a {
+            font-size: clamp(12px, 2vw, 14px);
+            color: var(--text-muted);
+            line-height: 1.7;
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .45s var(--ease-out), padding .45s var(--ease-out);
+        }
+        .faq-item.open .faq-a {
+            max-height: 300px;
+            padding: 0 20px 18px;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: clamp(32px, 5vh, 48px) clamp(16px, 5vw, 24px);
+        }
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: clamp(24px, 4vw, 40px);
+        }
+        .footer-brand .brand__name {
+            font-size: 16px;
+        }
+        .footer-brand p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            max-width: 260px;
+            line-height: 1.6;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: color .15s;
+            cursor: pointer;
+        }
+        .footer-links a:hover {
+            color: var(--text);
+        }
+        .footer-links h4 {
+            font-size: 11px;
+            font-family: var(--ff-mono);
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+        .footer-bottom {
+            max-width: 960px;
+            margin: 28px auto 0;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* ============================================================
+           FOCUS VISIBLE
+           ============================================================ */
+        *:focus-visible {
+            outline: 2px solid var(--red);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           SECTION REVEAL (general)
+           ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(.97);
+            transition: opacity .65s var(--ease-out), transform .65s var(--ease-out);
+            will-change: transform, opacity;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* ============================================================
+           MOBILE ADJUSTMENTS
+           ============================================================ */
+        @media(max-width:480px) {
+            .site-header {
+                padding: 0 12px;
+                height: 56px;
+            }
+            :root {
+                --header-h: 56px;
+            }
+            .hero {
+                padding: 70px 14px 60px;
+                min-height: 100svh;
+            }
+            .section,
+            .form-section,
+            .timeline-section {
+                padding: 44px 14px;
+            }
+            .cats-section,
+            .faq-section {
+                padding: 44px 14px;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .fcard {
+                padding: 16px 12px;
+                border-radius: 14px;
+            }
+            .glass-card {
+                padding: 16px 14px;
+                border-radius: 14px;
+            }
+            .brand__logo {
+                width: 30px;
+                height: 30px;
+                font-size: 10px;
+                border-radius: 7px;
+            }
+            .brand__name {
+                font-size: 12px;
+            }
+            .brand__sub {
+                font-size: 9px;
+            }
+            .lang-btn {
+                padding: 4px 6px;
+                font-size: 9px;
+            }
+            .theme-btn {
+                width: 30px;
+                height: 30px;
+                border-radius: 7px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero__actions {
+                gap: 10px;
+            }
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+                border-radius: 12px;
+            }
+            .seg label {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+        }
+        @media(max-width:360px) {
+            .hero__meta {
+                gap: 8px;
+            }
+            .hero__badge {
+                font-size: 10px;
+                gap: 4px;
+            }
+            .hero__badge svg {
+                width: 12px;
+                height: 12px;
+            }
+            .hero__sep {
+                display: none;
+            }
+            .cats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header" id="header" role="banner" aria-label="Site header">
+        <div class="brand" onclick="scrollToTop()" role="button" tabindex="0" aria-label="UZCHESS home">
+            <div class="brand__logo" aria-hidden="true">UC</div>
+            <div class="brand__text">
+                <span class="brand__name">UZCHESS</span>
+                <span class="brand__sub" data-i18n="brandSub">To'dako'l · 2025</span>
+            </div>
+        </div>
+        <nav class="nav-links" aria-label="Desktop navigation">
+            <a class="nav-link" onclick="scrollToSection('about')" data-i18n="navAbout" role="button" tabindex="0">Turnir haqida</a>
+            <a class="nav-link" onclick="scrollToSection('categories')" data-i18n="navCats" role="button" tabindex="0">Toifalar</a>
+            <a class="nav-link" onclick="scrollToSection('schedule')" data-i18n="navSchedule" role="button" tabindex="0">Jadval</a>
+            <a class="nav-link" onclick="scrollToSection('faq')" role="button" tabindex="0">FAQ</a>
+        </nav>
+        <div class="header-right">
+            <div class="lang-switch" role="group" aria-label="Language switcher">
+                <button class="lang-btn" data-lang="uz" aria-pressed="true">UZ</button>
+                <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+                <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+            </div>
+            <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <a href="https://t.me/Navoiychess" target="_blank" rel="noopener noreferrer" class="cta-nav" aria-label="Open Telegram channel">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.538.26l.193-2.792 5.08-4.59c.223-.198-.05-.308-.346-.11l-6.28 3.954-2.706-.847c-.588-.184-.6-.588.123-.87l10.58-4.078c.482-.18.904.112.745.86z"/></svg>
+                <span>Telegram</span>
+            </a>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========== MOBILE NAV OVERLAY ========== -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
+        <div class="mobile-nav-bg"></div>
+        <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+            <a class="mobile-nav-link" onclick="closeMobileNav();scrollToSection('about')" data-i18n="navAbout" role="button" tabindex="0">Turnir haqida</a>
+            <a class="mobile-nav-link" onclick="closeMobileNav();scrollToSection('categories')" data-i18n="navCats" role="button" tabindex="0">Toifalar</a>
+            <a class="mobile-nav-link" onclick="closeMobileNav();scrollToSection('schedule')" data-i18n="navSchedule" role="button" tabindex="0">Jadval</a>
+            <a class="mobile-nav-link" onclick="closeMobileNav();scrollToSection('register')" data-i18n="ctaNav" role="button" tabindex="0">Ro'yxatdan o'tish</a>
+            <a class="mobile-nav-link" onclick="closeMobileNav();scrollToSection('faq')" role="button" tabindex="0">FAQ</a>
+        </nav>
+    </div>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="top" aria-label="Hero section">
+        <div id="chessBg">
+            <div class="chess-grid" id="chessGrid"></div>
+            <!-- floating chess pieces -->
+            <div class="floating-piece fp-king" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none"><path d="M30 6l-4 8H16l-4-8h6l4-4h8l4 4h6l-4 8H22l-4-8h12z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M14 36h32l-4 14H18l-4-14z" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="20" y="50" width="20" height="6" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            </div>
+            <div class="floating-piece fp-queen" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none"><path d="M30 8c-2 0-3 2-3 4s1 4 3 4 3-2 3-4-1-4-3-4z" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="30" cy="8" r="2" stroke="currentColor" stroke-width="1" fill="none"/><path d="M12 36h36l-4 14H16l-4-14z" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="20" y="50" width="20" height="6" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            </div>
+            <div class="floating-piece fp-knight" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none"><path d="M22 10c0-2 1-4 4-4s6 2 6 6c0 4-4 6-4 10v6h-4v-6c0-4-4-6-4-10 0-2 1-4 2-4z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M14 40h28l-4 12H18l-4-12z" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="20" y="52" width="16" height="5" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            </div>
+        </div>
+        <div class="hero__radial"></div>
+        <div class="hero__content">
+            <p class="hero__eyebrow" data-i18n="eyebrow">O'zbekiston Shaxmat Federatsiyasi</p>
+            <h1 class="hero__title">
+                <span data-i18n="heroLine1">To'dako'l</span>
+                <em data-i18n="heroLine2">Chess Cup</em>
+            </h1>
+            <p class="hero__title-sub" data-i18n="heroSub">2025 · Rasmiy Turnir</p>
+            <div class="hero__meta">
+                <span class="hero__badge">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+                    <span data-i18n="location">To'dako'l tumani, Toshkent viloyati</span>
+                </span>
+                <span class="hero__sep"></span>
+                <span class="hero__badge">
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <span data-i18n="dateText">Sana tasdiqlanadi</span>
+                </span>
+                <span class="hero__sep"></span>
+                <span class="hero__badge">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="participantsLabel">200+ ishtirokchi</span>
+                </span>
+            </div>
+            <div class="hero__actions">
+                <button class="btn-primary" onclick="scrollToSection('register')">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="heroBtn">Ro'yxatdan o'tish</span>
+                </button>
+                <button class="btn-secondary" onclick="scrollToSection('about')">
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8h.01M11 12h1v4h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <span data-i18n="heroBtnInfo">Batafsil ma'lumot</span>
+                </button>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-hint__track"><div class="scroll-hint__dot"></div></div>
+            <span data-i18n="scrollHint">PASTGA</span>
+        </div>
+    </section>
+
+    <!-- ========== STATS STRIP ========== -->
+    <div class="stats-strip" aria-label="Tournament statistics">
+        <div class="stats-inner">
+            <div class="stat">
+                <div class="stat__num" data-count="200">0</div>
+                <div class="stat__label" data-i18n="stat1">Ishtirokchi o'rinlari</div>
+            </div>
+            <div class="stat">
+                <div class="stat__num">4</div>
+                <div class="stat__label" data-i18n="stat2">Musobaqa toifasi</div>
+            </div>
+            <div class="stat">
+                <div class="stat__num" data-count="10">0</div>
+                <div class="stat__label" data-i18n="stat3">Million so'm mukofot</div>
+            </div>
+            <div class="stat">
+                <div class="stat__num">1</div>
+                <div class="stat__label" data-i18n="stat4">Rasmiy FIDE turniri</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="section" id="about" aria-label="About the tournament">
+        <p class="section__label reveal" data-i18n="aboutLabel">Turnir haqida</p>
+        <h2 class="section__title reveal" data-i18n="aboutTitle">Nima uchun ishtirok etish kerak?</h2>
+        <p class="section__desc reveal" data-i18n="aboutDesc">To'dako'l shaxmat turniri — O'zbekiston shaxmat federatsiyasi tomonidan tashkil etilgan eng nufuzli mintaqaviy musobaqalardan biri.</p>
+        <div class="about-grid">
+            <div class="glass-card reveal" data-stagger="0">
+                <div class="glass-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+                <h3 class="glass-card__title" data-i18n="card1Title">Rasmiy reyting</h3>
+                <p class="glass-card__text" data-i18n="card1Text">Musobaqa natijalariga ko'ra FIDE va O'zbekiston shaxmat federatsiyasi reytingiga ball qo'shiladi.</p>
+            </div>
+            <div class="glass-card reveal" data-stagger="1">
+                <div class="glass-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8M9 18h6M12 2c-2 0-3.5 1-3.5 2.5S9 7 9 9c0 .8-.5 1.5-.5 1.5S12 11 12 9c0 0 3 .5 3-1.5S14 2 12 2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+                <h3 class="glass-card__title" data-i18n="card2Title">Tajriba va amaliyot</h3>
+                <p class="glass-card__text" data-i18n="card2Text">Har xil yoshdagi raqiblar bilan o'ynab, o'z mahoratingizni oshiring va yangi strategiyalar sinab ko'ring.</p>
+            </div>
+            <div class="glass-card reveal" data-stagger="2">
+                <div class="glass-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <h3 class="glass-card__title" data-i18n="card3Title">Yangi tanishuvlar</h3>
+                <p class="glass-card__text" data-i18n="card3Text">O'zbekistonning turli hududlaridan kelgan shaxmatchilar bilan muloqot qiling va hamkorlik o'rnating.</p>
+            </div>
+            <div class="glass-card reveal" data-stagger="3">
+                <div class="glass-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15c-1.5 0-3-.5-4-1.5s-1.5-2.5-1.5-4V5h11v4.5c0 1.5-.5 3-1.5 4s-2.5 1.5-4 1.5z" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 19h7M12 15v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 5H3a1 1 0 0 0-1 1v2a4 4 0 0 0 4 4M19.5 5H21a1 1 0 0 1 1 1v2a4 4 0 0 1-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <h3 class="glass-card__title" data-i18n="card4Title">Katta sovrinlar</h3>
+                <p class="glass-card__text" data-i18n="card4Text">Har bir toifada g'oliblar uchun pul mukofotlari va UZCHESS sovg'alari taqdim etiladi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CATEGORIES ========== -->
+    <div class="cats-section" id="categories" aria-label="Tournament categories">
+        <div class="cats-inner">
+            <p class="section__label reveal" data-i18n="catsLabel">Toifalar</p>
+            <h2 class="section__title reveal" data-i18n="catsTitle">Musobaqa toifalari</h2>
+            <p class="section__desc reveal" data-i18n="catsDesc">Har bir yosh guruh uchun alohida musobaqa o'tkaziladi. O'zingizga mos toifani tanlang.</p>
+            <div class="cats-grid">
+                <div class="cat-card reveal" data-stagger="0" onclick="scrollToSection('register')">
+                    <div class="cat-card__age" data-i18n="catAge1">12 YOSHGACHA</div>
+                    <div class="cat-card__name" data-i18n="catName1">Bolalar</div>
+                    <div class="cat-card__range" data-i18n="catRange1">Under 12</div>
+                    <div class="cat-card__num">01</div>
+                </div>
+                <div class="cat-card reveal" data-stagger="1" onclick="scrollToSection('register')">
+                    <div class="cat-card__age" data-i18n="catAge2">13–17 YOSH</div>
+                    <div class="cat-card__name" data-i18n="catName2">O'smirlar</div>
+                    <div class="cat-card__range" data-i18n="catRange2">Youth</div>
+                    <div class="cat-card__num">02</div>
+                </div>
+                <div class="cat-card reveal" data-stagger="2" onclick="scrollToSection('register')">
+                    <div class="cat-card__age" data-i18n="catAge3">18–49 YOSH</div>
+                    <div class="cat-card__name" data-i18n="catName3">Kattalar</div>
+                    <div class="cat-card__range" data-i18n="catRange3">Open</div>
+                    <div class="cat-card__num">03</div>
+                </div>
+                <div class="cat-card reveal" data-stagger="3" onclick="scrollToSection('register')">
+                    <div class="cat-card__age" data-i18n="catAge4">50+ YOSH</div>
+                    <div class="cat-card__name" data-i18n="catName4">Faxriylar</div>
+                    <div class="cat-card__range" data-i18n="catRange4">Veterans</div>
+                    <div class="cat-card__num">04</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TIMELINE ========== -->
+    <div class="timeline-section" id="schedule" aria-label="Tournament schedule">
+        <div class="timeline-inner">
+            <p class="section__label reveal" data-i18n="schedLabel">Jadval</p>
+            <h2 class="section__title reveal" data-i18n="schedTitle">Musobaqa jadvali</h2>
+            <div class="timeline">
+                <div class="timeline-item active reveal">
+                    <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="timeline-body">
+                        <p class="timeline-body__date" data-i18n="t1date">Hozir · Ochiq</p>
+                        <p class="timeline-body__title" data-i18n="t1title">Ro'yxatdan o'tish boshlandi</p>
+                        <p class="timeline-body__desc" data-i18n="t1desc">Online ariza qabul qilinmoqda. Barcha toifalar uchun ochiq.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+                    <div class="timeline-body">
+                        <p class="timeline-body__date" data-i18n="t2date">Tez orada</p>
+                        <p class="timeline-body__title" data-i18n="t2title">Ro'yxatdan o'tish yopiladi</p>
+                        <p class="timeline-body__desc" data-i18n="t2desc">O'rin cheklangan. Kechiktirmang!</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+                    <div class="timeline-body">
+                        <p class="timeline-body__date" data-i18n="t3date">Turnir kuni</p>
+                        <p class="timeline-body__title" data-i18n="t3title">Musobaqa boshlanadi</p>
+                        <p class="timeline-body__desc" data-i18n="t3desc">To'dako'l tumanidagi rasmiy o'yin maydoni. Batafsil ma'lumot keyinroq.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15c-1.5 0-3-.5-4-1.5S6.5 11 6.5 9.5V6h11v3.5c0 1.5-.5 3-1.5 4s-2.5 1.5-4 1.5z" stroke="currentColor" stroke-width="1.4"/><path d="M9 19h6M12 15v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+                    <div class="timeline-body">
+                        <p class="timeline-body__date" data-i18n="t4date">Yakun</p>
+                        <p class="timeline-body__title" data-i18n="t4title">Mukofotlar topshiriladi</p>
+                        <p class="timeline-body__desc" data-i18n="t4desc">G'oliblar e'lon qilinadi va sovrinlar topshiriladi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== REGISTRATION FORM ========== -->
+    <section class="form-section" id="register" aria-label="Registration form">
+        <div class="form-wrap">
+            <p class="section__label reveal" data-i18n="regLabel">Ro'yxatdan o'tish</p>
+            <h2 class="section__title reveal" data-i18n="regTitle">Turnirga qo'shiling</h2>
+            <p class="section__desc reveal" data-i18n="regDesc">Quyidagi shaklni to'ldiring. Ro'yxatdan o'tish bepul.</p>
+
+            <div class="form-progress reveal" id="formProgress">
+                <div class="form-progress__step active" data-step="1"></div>
+                <div class="form-progress__step" data-step="2"></div>
+                <div class="form-progress__step" data-step="3"></div>
+                <div class="form-progress__step" data-step="4"></div>
+            </div>
+
+            <form id="regForm" class="reg-form reveal" novalidate aria-label="Registration form">
+                <fieldset class="fcard">
+                    <legend data-i18n="sec1">Shaxsiy ma'lumotlar</legend>
+                    <div class="field">
+                        <label class="field__label" for="fullName" data-i18n="fnLabel">F.I.Sh. (to'liq)</label>
+                        <input class="field__input" type="text" id="fullName" name="fullName" required data-i18n-ph="fnPh" autocomplete="name">
+                        <p class="field__error" data-error-for="fullName"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="birthDate" data-i18n="bdLabel">Tug'ilgan sana</label>
+                        <input class="field__input" type="date" id="birthDate" name="birthDate" required>
+                        <p class="field__error" data-error-for="birthDate"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                    <div class="field">
+                        <span class="field__label" data-i18n="genLabel">Jinsi</span>
+                        <div class="seg" role="radiogroup" aria-label="Gender">
+                            <input type="radio" id="gM" name="gender" value="male" required>
+                            <label for="gM" data-i18n="genM">Erkak</label>
+                            <input type="radio" id="gF" name="gender" value="female">
+                            <label for="gF" data-i18n="genF">Ayol</label>
+                        </div>
+                        <p class="field__error" data-error-for="gender"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="category" data-i18n="catLabel">Musobaqa toifasi</label>
+                        <select class="field__input" id="category" name="category" required>
+                            <option value="" data-i18n="selPh">Tanlang</option>
+                            <option value="children" data-i18n="catChildren">Bolalar (12 yoshgacha)</option>
+                            <option value="youth" data-i18n="catYouth">O'smirlar (13–17 yosh)</option>
+                            <option value="adult" data-i18n="catAdult">Kattalar (18–49 yosh)</option>
+                            <option value="veteran" data-i18n="catVeteran">Faxriylar (50+)</option>
+                        </select>
+                        <p class="field__error" data-error-for="category"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                </fieldset>
+                <fieldset class="fcard">
+                    <legend data-i18n="sec2">Shaxmat ma'lumotlari</legend>
+                    <div class="field">
+                        <label class="field__label" for="fideId" data-i18n="fideLabel">FIDE ID (mavjud bo'lsa)</label>
+                        <input class="field__input" type="text" id="fideId" name="fideId" inputmode="numeric" data-i18n-ph="fidePh">
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="rating" data-i18n="ratingLabel">Reyting (mavjud bo'lsa)</label>
+                        <input class="field__input" type="number" id="rating" name="rating" min="0" max="3500" inputmode="numeric">
+                        <label class="chk" style="margin-top:8px">
+                            <input type="checkbox" id="noRating" name="noRating">
+                            <span data-i18n="noRating">Reytingim yo'q</span>
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="club" data-i18n="clubLabel">Klub / murabbiy (ixtiyoriy)</label>
+                        <input class="field__input" type="text" id="club" name="club" data-i18n-ph="clubPh">
+                    </div>
+                </fieldset>
+                <fieldset class="fcard">
+                    <legend data-i18n="sec3">Aloqa ma'lumotlari</legend>
+                    <div class="field">
+                        <label class="field__label" for="phone" data-i18n="phoneLabel">Telefon raqami</label>
+                        <input class="field__input" type="tel" id="phone" name="phone" required placeholder="+998 90 123 45 67" autocomplete="tel">
+                        <p class="field__error" data-error-for="phone"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="region" data-i18n="regionLabel">Yashash hududi</label>
+                        <select class="field__input" id="region" name="region" required>
+                            <option value="" data-i18n="selPh">Tanlang</option>
+                            <option value="tashkent_city" data-i18n="rTC">Toshkent shahri</option>
+                            <option value="tashkent_region" data-i18n="rTR">Toshkent viloyati</option>
+                            <option value="andijan" data-i18n="rAJ">Andijon</option>
+                            <option value="bukhara" data-i18n="rBK">Buxoro</option>
+                            <option value="fergana" data-i18n="rFG">Farg'ona</option>
+                            <option value="jizzakh" data-i18n="rJZ">Jizzax</option>
+                            <option value="khorezm" data-i18n="rKH">Xorazm</option>
+                            <option value="namangan" data-i18n="rNM">Namangan</option>
+                            <option value="navoi" data-i18n="rNV">Navoiy</option>
+                            <option value="kashkadarya" data-i18n="rKD">Qashqadaryo</option>
+                            <option value="samarkand" data-i18n="rSM">Samarqand</option>
+                            <option value="syrdarya" data-i18n="rSD">Sirdaryo</option>
+                            <option value="surkhandarya" data-i18n="rSU">Surxondaryo</option>
+                            <option value="karakalpakstan" data-i18n="rQQ">Qoraqalpog'iston</option>
+                        </select>
+                        <p class="field__error" data-error-for="region"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                    </div>
+                </fieldset>
+                <fieldset class="fcard">
+                    <legend data-i18n="sec4">Tasdiqlash</legend>
+                    <label class="chk chk--lg">
+                        <input type="checkbox" id="agree" name="agree" required>
+                        <span data-i18n="agreeLabel">Men musobaqa qoidalari bilan tanishdim va roziman</span>
+                    </label>
+                    <p class="field__error" data-error-for="agree" style="margin-top:6px"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span></span></p>
+                </fieldset>
+                <button type="submit" class="submit-btn">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="submitBtn">Ro'yxatdan o'tish</span>
+                </button>
+            </form>
+
+            <!-- SUCCESS -->
+            <div class="success-panel" id="successPanel" hidden aria-live="polite">
+                <div class="success-panel__checkmark">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h2 class="success-panel__title" data-i18n="succTitle">Tabriklaymiz!</h2>
+                <p class="success-panel__text" data-i18n="succText">Siz ishtirokchilar ro'yxatiga muvaffaqiyatli qo'shildingiz. Tashkilotchilar siz bilan bog'lanishi mumkin.</p>
+                <div class="success-panel__ref">
+                    <span data-i18n="refLabel">Ro'yxatga olish raqami</span>
+                    <strong id="refNumber"></strong>
+                </div>
+                <button class="success-back" onclick="resetForm()" data-i18n="backBtn">← Boshqa ro'yxatdan o'tish</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <div class="faq-section" id="faq" aria-label="Frequently asked questions">
+        <div class="faq-inner">
+            <p class="section__label reveal" data-i18n="faqLabel">FAQ</p>
+            <h2 class="section__title reveal" data-i18n="faqTitle">Ko'p beriladigan savollar</h2>
+            <div class="faq-list reveal">
+                <div class="faq-item">
+                    <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+                        <span data-i18n="faq1q">Ro'yxatdan o'tish bepulmi?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="faq-a" data-i18n="faq1a">Ha, ro'yxatdan o'tish mutlaqo bepul. Barcha toifalar uchun hech qanday to'lov talab etilmaydi.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+                        <span data-i18n="faq2q">FIDE reytingim bo'lmasa ham ishtirok eta olamanmi?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="faq-a" data-i18n="faq2a">Albatta! Reytingsiz ishtirokchilar ham barcha toifalarda musobaqalashishlari mumkin. "Reytingim yo'q" katagini belgilang.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+                        <span data-i18n="faq3q">Turnir qayerda o'tkaziladi?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="faq-a" data-i18n="faq3a">Turnir To'dako'l tumanida, Toshkent viloyatida o'tkaziladi. Aniq manzil va sana ro'yxatdan o'tgan ishtirokchilarga yuboriladi.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+                        <span data-i18n="faq4q">Ro'yxatdan o'tishni bekor qilish mumkinmi?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="faq-a" data-i18n="faq4a">Ha. Ro'yxatdan o'tishni bekor qilish uchun tashkilotchilar bilan bog'laning. Telefon raqami veb-sayt pastki qismida ko'rsatilgan.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+                        <span data-i18n="faq5q">Qanday o'yin formati qo'llaniladi?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="faq-a" data-i18n="faq5a">Musobaqa Swiss tizimida o'tkaziladi. To'liq qoidalar va format haqida ma'lumot ro'yxatdan o'tgan ishtirokchilarga yuboriladi.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="brand">
+                    <div class="brand__logo" aria-hidden="true">UC</div>
+                    <div class="brand__text">
+                        <span class="brand__name">UZCHESS</span>
+                        <span class="brand__sub">To'dako'l · 2025</span>
+                    </div>
+                </div>
+                <p data-i18n="footerDesc">O'zbekiston Shaxmat Federatsiyasi. To'dako'l tumani rasmiy shaxmat turniri.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footerLinks">Havolalar</h4>
+                <a onclick="scrollToSection('about')" data-i18n="navAbout" role="button" tabindex="0">Turnir haqida</a>
+                <a onclick="scrollToSection('categories')" data-i18n="navCats" role="button" tabindex="0">Toifalar</a>
+                <a onclick="scrollToSection('schedule')" data-i18n="navSchedule" role="button" tabindex="0">Jadval</a>
+                <a onclick="scrollToSection('register')" data-i18n="ctaNav" role="button" tabindex="0">Ro'yxatdan o'tish</a>
+                <a onclick="scrollToSection('faq')" role="button" tabindex="0">FAQ</a>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footerContact">Bog'lanish</h4>
+                <a>UZCHESS Federatsiyasi</a>
+                <a data-i18n="footerTel">Telefon: tasdiqlanadi</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-i18n="footerCopy">© 2025 UZCHESS · To'dako'l tournament. Barcha huquqlar himoyalangan.</span>
+            <span style="display:flex;align-items:center;gap:8px;">
+                <span style="width:6px;height:6px;background:var(--success);border-radius:50%;animation:pulse 2s ease infinite;"></span>
+                <span data-i18n="footerStatus" style="font-size:11px;font-family:var(--ff-mono);">RO'YXATDAN O'TISH OCHIQ</span>
+            </span>
+        </div>
+    </footer>
+
+    <!-- confetti canvas -->
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+    <script>
+        /* ============================================================
+           TRANSLATIONS
+           ============================================================ */
+        const T = {
+            uz: {
+                brandSub: "To'dako'l · 2025",
+                navAbout: "Turnir haqida",
+                navCats: "Toifalar",
+                navSchedule: "Jadval",
+                ctaNav: "Ro'yxatdan o'tish",
+                eyebrow: "O'zbekiston Shaxmat Federatsiyasi",
+                heroLine1: "To'dako'l",
+                heroLine2: "Chess Cup",
+                heroSub: "2025 · Rasmiy Turnir",
+                location: "To'dako'l tumani, Toshkent viloyati",
+                dateText: "Sana tasdiqlanadi",
+                participantsLabel: "200+ ishtirokchi",
+                heroBtn: "Ro'yxatdan o'tish",
+                heroBtnInfo: "Batafsil ma'lumot",
+                scrollHint: "PASTGA",
+                stat1: "Ishtirokchi o'rinlari",
+                stat2: "Musobaqa toifasi",
+                stat3: "Million so'm mukofot",
+                stat4: "Rasmiy FIDE turniri",
+                aboutLabel: "Turnir haqida",
+                aboutTitle: "Nima uchun ishtirok etish kerak?",
+                aboutDesc: "To'dako'l shaxmat turniri — O'zbekiston shaxmat federatsiyasi tomonidan tashkil etilgan eng nufuzli mintaqaviy musobaqalardan biri.",
+                card1Title: "Rasmiy reyting",
+                card1Text: "Musobaqa natijalariga ko'ra FIDE va O'zbekiston shaxmat federatsiyasi reytingiga ball qo'shiladi.",
+                card2Title: "Tajriba va amaliyot",
+                card2Text: "Har xil yoshdagi raqiblar bilan o'ynab, o'z mahoratingizni oshiring va yangi strategiyalar sinab ko'ring.",
+                card3Title: "Yangi tanishuvlar",
+                card3Text: "O'zbekistonning turli hududlaridan kelgan shaxmatchilar bilan muloqot qiling va hamkorlik o'rnating.",
+                card4Title: "Katta sovrinlar",
+                card4Text: "Har bir toifada g'oliblar uchun pul mukofotlari va UZCHESS sovg'alari taqdim etiladi.",
+                catsLabel: "Toifalar",
+                catsTitle: "Musobaqa toifalari",
+                catsDesc: "Har bir yosh guruh uchun alohida musobaqa o'tkaziladi. O'zingizga mos toifani tanlang.",
+                catAge1: "12 YOSHGACHA",
+                catName1: "Bolalar",
+                catRange1: "Under 12",
+                catAge2: "13–17 YOSH",
+                catName2: "O'smirlar",
+                catRange2: "Youth",
+                catAge3: "18–49 YOSH",
+                catName3: "Kattalar",
+                catRange3: "Open",
+                catAge4: "50+ YOSH",
+                catName4: "Faxriylar",
+                catRange4: "Veterans",
+                schedLabel: "Jadval",
+                schedTitle: "Musobaqa jadvali",
+                t1date: "Hozir · Ochiq",
+                t1title: "Ro'yxatdan o'tish boshlandi",
+                t1desc: "Online ariza qabul qilinmoqda. Barcha toifalar uchun ochiq.",
+                t2date: "Tez orada",
+                t2title: "Ro'yxatdan o'tish yopiladi",
+                t2desc: "O'rin cheklangan. Kechiktirmang!",
+                t3date: "Turnir kuni",
+                t3title: "Musobaqa boshlanadi",
+                t3desc: "To'dako'l tumanidagi rasmiy o'yin maydoni. Batafsil ma'lumot keyinroq.",
+                t4date: "Yakun",
+                t4title: "Mukofotlar topshiriladi",
+                t4desc: "G'oliblar e'lon qilinadi va sovrinlar topshiriladi.",
+                regLabel: "Ro'yxatdan o'tish",
+                regTitle: "Turnirga qo'shiling",
+                regDesc: "Quyidagi shaklni to'ldiring. Ro'yxatdan o'tish bepul.",
+                sec1: "Shaxsiy ma'lumotlar",
+                fnLabel: "F.I.Sh. (to'liq)",
+                fnPh: "Familiya Ism Sharif",
+                bdLabel: "Tug'ilgan sana",
+                genLabel: "Jinsi",
+                genM: "Erkak",
+                genF: "Ayol",
+                catLabel: "Musobaqa toifasi",
+                selPh: "Tanlang",
+                catChildren: "Bolalar (12 yoshgacha)",
+                catYouth: "O'smirlar (13–17 yosh)",
+                catAdult: "Kattalar (18–49 yosh)",
+                catVeteran: "Faxriylar (50+)",
+                sec2: "Shaxmat ma'lumotlari",
+                fideLabel: "FIDE ID (mavjud bo'lsa)",
+                fidePh: "12345678",
+                ratingLabel: "Reyting (mavjud bo'lsa)",
+                noRating: "Reytingim yo'q",
+                clubLabel: "Klub / murabbiy (ixtiyoriy)",
+                clubPh: "Toshkent shaxmat klubi",
+                sec3: "Aloqa ma'lumotlari",
+                phoneLabel: "Telefon raqami",
+                regionLabel: "Yashash hududi",
+                rTC: "Toshkent shahri",
+                rTR: "Toshkent viloyati",
+                rAJ: "Andijon",
+                rBK: "Buxoro",
+                rFG: "Farg'ona",
+                rJZ: "Jizzax",
+                rKH: "Xorazm",
+                rNM: "Namangan",
+                rNV: "Navoiy",
+                rKD: "Qashqadaryo",
+                rSM: "Samarqand",
+                rSD: "Sirdaryo",
+                rSU: "Surxondaryo",
+                rQQ: "Qoraqalpog'iston",
+                sec4: "Tasdiqlash",
+                agreeLabel: "Men musobaqa qoidalari bilan tanishdim va roziman",
+                submitBtn: "Ro'yxatdan o'tish",
+                succTitle: "Tabriklaymiz!",
+                succText: "Siz ishtirokchilar ro'yxatiga muvaffaqiyatli qo'shildingiz. Tashkilotchilar siz bilan bog'lanishi mumkin.",
+                refLabel: "Ro'yxatga olish raqami",
+                backBtn: "← Boshqa ro'yxatdan o'tish",
+                faqLabel: "FAQ",
+                faqTitle: "Ko'p beriladigan savollar",
+                faq1q: "Ro'yxatdan o'tish bepulmi?",
+                faq1a: "Ha, ro'yxatdan o'tish mutlaqo bepul. Barcha toifalar uchun hech qanday to'lov talab etilmaydi.",
+                faq2q: "FIDE reytingim bo'lmasa ham ishtirok eta olamanmi?",
+                faq2a: 'Albatta! Reytingsiz ishtirokchilar ham barcha toifalarda musobaqalashishlari mumkin. "Reytingim yo\'q" katagini belgilang.',
+                faq3q: "Turnir qayerda o'tkaziladi?",
+                faq3a: "Turnir To'dako'l tumanida, Toshkent viloyatida o'tkaziladi. Aniq manzil va sana ro'yxatdan o'tgan ishtirokchilarga yuboriladi.",
+                faq4q: "Ro'yxatdan o'tishni bekor qilish mumkinmi?",
+                faq4a: "Ha. Ro'yxatdan o'tishni bekor qilish uchun tashkilotchilar bilan bog'laning. Telefon raqami veb-sayt pastki qismida ko'rsatilgan.",
+                faq5q: "Qanday o'yin formati qo'llaniladi?",
+                faq5a: "Musobaqa Swiss tizimida o'tkaziladi. To'liq qoidalar va format haqida ma'lumot ro'yxatdan o'tgan ishtirokchilarga yuboriladi.",
+                footerDesc: "O'zbekiston Shaxmat Federatsiyasi. To'dako'l tumani rasmiy shaxmat turniri.",
+                footerLinks: "Havolalar",
+                footerContact: "Bog'lanish",
+                footerTel: "Telefon: tasdiqlanadi",
+                footerCopy: "© 2025 UZCHESS · To'dako'l tournament. Barcha huquqlar himoyalangan.",
+                footerStatus: "RO'YXATDAN O'TISH OCHIQ",
+                errRequired: "Bu maydonni to'ldirish shart",
+                errPhone: "Telefon raqamini to'g'ri kiriting"
+            },
+            ru: {
+                brandSub: "Тудакуль · 2025",
+                navAbout: "О турнире",
+                navCats: "Категории",
+                navSchedule: "Расписание",
+                ctaNav: "Зарегистрироваться",
+                eyebrow: "Федерация шахмат Узбекистана",
+                heroLine1: "Тудакуль",
+                heroLine2: "Chess Cup",
+                heroSub: "2025 · Официальный турнир",
+                location: "Тудакульский район, Ташкентская область",
+                dateText: "Дата уточняется",
+                participantsLabel: "200+ участников",
+                heroBtn: "Зарегистрироваться",
+                heroBtnInfo: "Подробнее",
+                scrollHint: "ВНИЗ",
+                stat1: "Мест для участников",
+                stat2: "Категории турнира",
+                stat3: "Млн сум призовых",
+                stat4: "Официальный FIDE",
+                aboutLabel: "О турнире",
+                aboutTitle: "Почему стоит участвовать?",
+                aboutDesc: "Шахматный турнир в Тудакуле — один из наиболее престижных региональных соревнований, организованных Федерацией шахмат Узбекистана.",
+                card1Title: "Официальный рейтинг",
+                card1Text: "По итогам турнира начисляются очки в рейтинги FIDE и Федерации шахмат Узбекистана.",
+                card2Title: "Опыт и практика",
+                card2Text: "Играйте с соперниками разных возрастов, совершенствуйте мастерство и пробуйте новые стратегии.",
+                card3Title: "Новые знакомства",
+                card3Text: "Общайтесь с шахматистами из разных регионов Узбекистана и устанавливайте новые связи.",
+                card4Title: "Крупные призы",
+                card4Text: "Победителям в каждой категории вручаются денежные призы и подарки от UZCHESS.",
+                catsLabel: "Категории",
+                catsTitle: "Категории турнира",
+                catsDesc: "Для каждой возрастной группы проводится отдельное соревнование. Выберите подходящую категорию.",
+                catAge1: "ДО 12 ЛЕТ",
+                catName1: "Дети",
+                catRange1: "Under 12",
+                catAge2: "13–17 ЛЕТ",
+                catName2: "Юниоры",
+                catRange2: "Youth",
+                catAge3: "18–49 ЛЕТ",
+                catName3: "Взрослые",
+                catRange3: "Open",
+                catAge4: "50+ ЛЕТ",
+                catName4: "Ветераны",
+                catRange4: "Veterans",
+                schedLabel: "Расписание",
+                schedTitle: "Расписание турнира",
+                t1date: "Сейчас · Открыто",
+                t1title: "Регистрация началась",
+                t1desc: "Принимаются онлайн-заявки. Открыто для всех категорий.",
+                t2date: "Скоро",
+                t2title: "Регистрация закроется",
+                t2desc: "Количество мест ограничено. Не откладывайте!",
+                t3date: "День турнира",
+                t3title: "Начало соревнований",
+                t3desc: "Официальная площадка в Тудакульском районе. Подробности позже.",
+                t4date: "Итоги",
+                t4title: "Церемония награждения",
+                t4desc: "Объявление победителей и вручение призов.",
+                regLabel: "Регистрация",
+                regTitle: "Присоединяйтесь к турниру",
+                regDesc: "Заполните форму ниже. Регистрация бесплатна.",
+                sec1: "Личные данные",
+                fnLabel: "Ф.И.О. (полностью)",
+                fnPh: "Фамилия Имя Отчество",
+                bdLabel: "Дата рождения",
+                genLabel: "Пол",
+                genM: "Мужской",
+                genF: "Женский",
+                catLabel: "Категория турнира",
+                selPh: "Выберите",
+                catChildren: "Дети (до 12 лет)",
+                catYouth: "Юниоры (13–17 лет)",
+                catAdult: "Взрослые (18–49 лет)",
+                catVeteran: "Ветераны (50+)",
+                sec2: "Шахматные данные",
+                fideLabel: "FIDE ID (если есть)",
+                fidePh: "12345678",
+                ratingLabel: "Рейтинг (если есть)",
+                noRating: "У меня нет рейтинга",
+                clubLabel: "Клуб / тренер (необязательно)",
+                clubPh: "Ташкентский шахматный клуб",
+                sec3: "Контактные данные",
+                phoneLabel: "Номер телефона",
+                regionLabel: "Регион проживания",
+                rTC: "г. Ташкент",
+                rTR: "Ташкентская область",
+                rAJ: "Андижанская обл.",
+                rBK: "Бухарская обл.",
+                rFG: "Ферганская обл.",
+                rJZ: "Джизакская обл.",
+                rKH: "Хорезмская обл.",
+                rNM: "Наманганская обл.",
+                rNV: "Навоийская обл.",
+                rKD: "Кашкадарьинская обл.",
+                rSM: "Самаркандская обл.",
+                rSD: "Сырдарьинская обл.",
+                rSU: "Сурхандарьинская обл.",
+                rQQ: "Республика Каракалпакстан",
+                sec4: "Подтверждение",
+                agreeLabel: "Я ознакомлен(а) с правилами турнира и согласен(на)",
+                submitBtn: "Зарегистрироваться",
+                succTitle: "Поздравляем!",
+                succText: "Вы успешно добавлены в список участников. Организаторы могут связаться с вами в ближайшее время.",
+                refLabel: "Номер регистрации",
+                backBtn: "← Зарегистрировать другого",
+                faqLabel: "FAQ",
+                faqTitle: "Часто задаваемые вопросы",
+                faq1q: "Регистрация бесплатна?",
+                faq1a: "Да, регистрация абсолютно бесплатна. Никаких взносов для всех категорий не требуется.",
+                faq2q: "Можно ли участвовать без рейтинга FIDE?",
+                faq2a: "Конечно! Участники без рейтинга могут участвовать во всех категориях. Просто отметьте «У меня нет рейтинга».",
+                faq3q: "Где проводится турнир?",
+                faq3a: "Турнир проводится в Тудакульском районе, Ташкентской области. Точный адрес и дата будут отправлены зарегистрированным участникам.",
+                faq4q: "Можно ли отменить регистрацию?",
+                faq4a: "Да. Для отмены регистрации свяжитесь с организаторами. Номер телефона указан внизу сайта.",
+                faq5q: "Какой формат игры используется?",
+                faq5a: "Турнир проводится по швейцарской системе. Подробные правила и формат будут отправлены зарегистрированным участникам.",
+                footerDesc: "Федерация шахмат Узбекистана. Официальный шахматный турнир Тудакульского района.",
+                footerLinks: "Ссылки",
+                footerContact: "Контакты",
+                footerTel: "Телефон: уточняется",
+                footerCopy: "© 2025 UZCHESS · Тудакуль. Все права защищены.",
+                footerStatus: "РЕГИСТРАЦИЯ ОТКРЫТА",
+                errRequired: "Это поле обязательно",
+                errPhone: "Введите корректный номер телефона"
+            },
+            en: {
+                brandSub: "To'dako'l · 2025",
+                navAbout: "About",
+                navCats: "Categories",
+                navSchedule: "Schedule",
+                ctaNav: "Register",
+                eyebrow: "Uzbekistan Chess Federation",
+                heroLine1: "To'dako'l",
+                heroLine2: "Chess Cup",
+                heroSub: "2025 · Official Tournament",
+                location: "To'dako'l district, Tashkent region",
+                dateText: "Date to be announced",
+                participantsLabel: "200+ participants",
+                heroBtn: "Register now",
+                heroBtnInfo: "Learn more",
+                scrollHint: "SCROLL",
+                stat1: "Participant slots",
+                stat2: "Categories",
+                stat3: "M sum prize pool",
+                stat4: "Official FIDE event",
+                aboutLabel: "About",
+                aboutTitle: "Why participate?",
+                aboutDesc: "The To'dako'l Chess Tournament is one of the most prestigious regional competitions organized by the Uzbekistan Chess Federation.",
+                card1Title: "Official rating",
+                card1Text: "Results contribute to both FIDE and Uzbekistan Chess Federation rating calculations.",
+                card2Title: "Experience & practice",
+                card2Text: "Play opponents of all ages, sharpen your skills, and test new strategies in a competitive environment.",
+                card3Title: "New connections",
+                card3Text: "Meet chess players from across Uzbekistan and build lasting relationships in the chess community.",
+                card4Title: "Big prizes",
+                card4Text: "Winners in each category receive cash prizes and special gifts from UZCHESS.",
+                catsLabel: "Categories",
+                catsTitle: "Tournament categories",
+                catsDesc: "Separate competitions are held for each age group. Find your category and register.",
+                catAge1: "UNDER 12",
+                catName1: "Children",
+                catRange1: "Under 12",
+                catAge2: "AGE 13–17",
+                catName2: "Youth",
+                catRange2: "Youth",
+                catAge3: "AGE 18–49",
+                catName3: "Adults",
+                catRange3: "Open",
+                catAge4: "AGE 50+",
+                catName4: "Veterans",
+                catRange4: "Veterans",
+                schedLabel: "Schedule",
+                schedTitle: "Tournament schedule",
+                t1date: "Now · Open",
+                t1title: "Registration open",
+                t1desc: "Online applications are being accepted. Open for all categories.",
+                t2date: "Coming soon",
+                t2title: "Registration closes",
+                t2desc: "Spots are limited — don't wait!",
+                t3date: "Tournament day",
+                t3title: "Competition begins",
+                t3desc: "Official venue in To'dako'l district. More details to follow.",
+                t4date: "Conclusion",
+                t4title: "Award ceremony",
+                t4desc: "Winners announced and prizes presented.",
+                regLabel: "Registration",
+                regTitle: "Join the tournament",
+                regDesc: "Fill in the form below. Registration is free.",
+                sec1: "Personal details",
+                fnLabel: "Full name",
+                fnPh: "Last name, First name",
+                bdLabel: "Date of birth",
+                genLabel: "Gender",
+                genM: "Male",
+                genF: "Female",
+                catLabel: "Tournament category",
+                selPh: "Select",
+                catChildren: "Children (under 12)",
+                catYouth: "Youth (13–17)",
+                catAdult: "Adults (18–49)",
+                catVeteran: "Veterans (50+)",
+                sec2: "Chess details",
+                fideLabel: "FIDE ID (if any)",
+                fidePh: "12345678",
+                ratingLabel: "Rating (if any)",
+                noRating: "I don't have a rating",
+                clubLabel: "Club / coach (optional)",
+                clubPh: "Tashkent Chess Club",
+                sec3: "Contact details",
+                phoneLabel: "Phone number",
+                regionLabel: "Region of residence",
+                rTC: "Tashkent city",
+                rTR: "Tashkent region",
+                rAJ: "Andijan",
+                rBK: "Bukhara",
+                rFG: "Fergana",
+                rJZ: "Jizzakh",
+                rKH: "Khorezm",
+                rNM: "Namangan",
+                rNV: "Navoiy",
+                rKD: "Kashkadarya",
+                rSM: "Samarkand",
+                rSD: "Syrdarya",
+                rSU: "Surkhandarya",
+                rQQ: "Karakalpakstan",
+                sec4: "Confirmation",
+                agreeLabel: "I have read and agree to the tournament rules",
+                submitBtn: "Register",
+                succTitle: "You're registered!",
+                succText: "You've been successfully added to the participants list. Organizers may contact you shortly.",
+                refLabel: "Registration number",
+                backBtn: "← Register another participant",
+                faqLabel: "FAQ",
+                faqTitle: "Frequently asked questions",
+                faq1q: "Is registration free?",
+                faq1a: "Yes, registration is completely free. No fees are required for any category.",
+                faq2q: "Can I participate without a FIDE rating?",
+                faq2a: 'Absolutely! Unrated players can compete in all categories. Simply check "I don\'t have a rating".',
+                faq3q: "Where is the tournament held?",
+                faq3a: "The tournament is held in To'dako'l district, Tashkent region. The exact venue and date will be sent to registered participants.",
+                faq4q: "Can I cancel my registration?",
+                faq4a: "Yes. To cancel, contact the organizers. The phone number is listed at the bottom of the site.",
+                faq5q: "What game format is used?",
+                faq5a: "The tournament uses the Swiss system. Full rules and format details will be sent to registered participants.",
+                footerDesc: "Uzbekistan Chess Federation. Official chess tournament of To'dako'l district.",
+                footerLinks: "Links",
+                footerContact: "Contact",
+                footerTel: "Phone: to be announced",
+                footerCopy: "© 2025 UZCHESS · To'dako'l tournament. All rights reserved.",
+                footerStatus: "REGISTRATION OPEN",
+                errRequired: "This field is required",
+                errPhone: "Enter a valid phone number"
+            }
+        };
+
+        /* ============================================================
+           LANG + THEME
+           ============================================================ */
+        let lang = localStorage.getItem('uzchess_lang') || 'uz';
+
+        function applyLang(l) {
+            lang = l;
+            localStorage.setItem('uzchess_lang', l);
+            document.documentElement.setAttribute('lang', l);
+            const d = T[l];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.getAttribute('data-i18n');
+                if (d[k] != null) el.textContent = d[k];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const k = el.getAttribute('data-i18n-ph');
+                if (d[k]) el.setAttribute('placeholder', d[k]);
+            });
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === l));
+            });
+            document.querySelectorAll('.field__error.is-visible').forEach(el => {
+                const k = el.getAttribute('data-err-key');
+                if (k && d[k]) el.querySelector('span').textContent = d[k];
+            });
+        }
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.addEventListener('click', () => applyLang(b.getAttribute('data-lang')));
+        });
+
+        document.getElementById('themeBtn').addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('uzchess_theme', next);
+        });
+
+        /* ============================================================
+           CHESS GRID
+           ============================================================ */
+        (function() {
+            const g = document.getElementById('chessGrid');
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'chess-cell ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
+                    g.appendChild(cell);
+                }
+            }
+            setInterval(() => {
+                const cells = g.querySelectorAll('.chess-cell');
+                const idx = Math.floor(Math.random() * 64);
+                cells[idx].style.opacity = String(0.2 + Math.random() * 0.8);
+                setTimeout(() => { cells[idx].style.opacity = ''; }, 600);
+            }, 400);
+        })();
+
+        /* ============================================================
+           SCROLL HELPERS
+           ============================================================ */
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        /* ============================================================
+           MOBILE NAV
+           ============================================================ */
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNavBg = mobileNavOverlay.querySelector('.mobile-nav-bg');
+        let mobileNavOpen = false;
+
+        function openMobileNav() {
+            mobileNavOpen = true;
+            hamburgerBtn.classList.add('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            hamburgerBtn.setAttribute('aria-label', 'Close menu');
+            mobileNavOverlay.classList.add('open');
+            mobileNavOverlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileNav() {
+            mobileNavOpen = false;
+            hamburgerBtn.classList.remove('open');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            hamburgerBtn.setAttribute('aria-label', 'Open menu');
+            mobileNavOverlay.classList.remove('open');
+            mobileNavOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        hamburgerBtn.addEventListener('click', () => {
+            if (mobileNavOpen) closeMobileNav();
+            else openMobileNav();
+        });
+        mobileNavBg.addEventListener('click', closeMobileNav);
+        mobileNavOverlay.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => closeMobileNav());
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNavOpen) closeMobileNav();
+        });
+
+        /* ============================================================
+           CHESSBOARD PARALLAX (desktop) + MOBILE FLOAT
+           ============================================================ */
+        const chessGrid = document.getElementById('chessGrid');
+        let parallaxActive = false;
+        const isMobile = window.matchMedia('(max-width:768px)').matches;
+
+        function updateChessboardParallax(e) {
+            if (!parallaxActive || isMobile) return;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const dx = (e.clientX - cx) / cx;
+            const dy = (e.clientY - cy) / cy;
+            const rx = 28 + dy * 3;
+            const rz = 8 + dx * 2;
+            requestAnimationFrame(() => {
+                chessGrid.style.transform =
+                    `perspective(900px) rotateX(${rx}deg) rotateZ(${rz}deg) scale(1.6)`;
+            });
+        }
+        if (!isMobile) {
+            document.addEventListener('mousemove', updateChessboardParallax, { passive: true });
+            parallaxActive = true;
+        } else {
+            // mobile: subtle auto-float via CSS animation on the grid wrapper
+            chessGrid.style.animation = 'chessFloat 16s ease-in-out infinite';
+            const floatKeyframes = `
+            @keyframes chessFloat {
+              0%,100% { transform: perspective(900px) rotateX(28deg) rotateZ(8deg) scale(1.6); }
+              25% { transform: perspective(900px) rotateX(26deg) rotateZ(9.5deg) scale(1.6); }
+              50% { transform: perspective(900px) rotateX(29.5deg) rotateZ(7deg) scale(1.6); }
+              75% { transform: perspective(900px) rotateX(27deg) rotateZ(9deg) scale(1.6); }
+            }`;
+            const styleEl = document.createElement('style');
+            styleEl.textContent = floatKeyframes;
+            document.head.appendChild(styleEl);
+        }
+
+        /* ============================================================
+           HERO LOAD SEQUENCE
+           ============================================================ */
+        function triggerHeroLoad() {
+            chessGrid.classList.add('visible');
+            document.querySelectorAll('.floating-piece').forEach(fp => fp.classList.add('visible'));
+            document.querySelector('.hero__eyebrow').classList.add('visible');
+            document.querySelector('.hero__title').classList.add('visible');
+            document.querySelector('.hero__title-sub').classList.add('visible');
+            document.querySelector('.hero__meta').classList.add('visible');
+            document.querySelector('.hero__actions').classList.add('visible');
+            document.querySelector('.scroll-hint').classList.add('visible');
+        }
+        // trigger after a tiny delay for initial render
+        setTimeout(triggerHeroLoad, 150);
+
+        /* ============================================================
+           INTERSECTION OBSERVER — REVEAL + STAGGER + STATS
+           ============================================================ */
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const el = e.target;
+                    // stagger delay
+                    const stagger = parseInt(el.getAttribute('data-stagger') || '0');
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, stagger * 100);
+                    // count-up for stats
+                    const numEl = el.querySelector('[data-count]');
+                    if (numEl && !numEl._counted) {
+                        numEl._counted = true;
+                        const target = parseInt(numEl.getAttribute('data-count'));
+                        let cur = 0;
+                        const duration = 1600;
+                        const start = performance.now();
+
+                        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+                        function tick(now) {
+                            const elapsed = now - start;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const eased = easeOut(progress);
+                            cur = Math.floor(eased * target);
+                            numEl.textContent = cur + (target >= 10 ? '+' : '');
+                            if (progress < 1) requestAnimationFrame(tick);
+                            else numEl.textContent = target + (target >= 10 ? '+' : '');
+                        }
+                        requestAnimationFrame(tick);
+                    }
+                    revealObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+        document.querySelectorAll('.reveal,.stat,.timeline-item,.glass-card,.cat-card').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        /* ============================================================
+           FAQ ACCORDION
+           ============================================================ */
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const q = item.querySelector('.faq-q');
+            q.addEventListener('click', () => {
+                const open = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('open');
+                    i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+                });
+                if (!open) {
+                    item.classList.add('open');
+                    q.setAttribute('aria-expanded', 'true');
+                }
+            });
+            q.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault();
+                    q.click(); }
+            });
+        });
+
+        /* ============================================================
+           FORM — PROGRESS INDICATOR
+           ============================================================ */
+        function updateProgress() {
+            const steps = document.querySelectorAll('.form-progress__step');
+            const cards = document.querySelectorAll('.fcard');
+            cards.forEach((card, i) => {
+                const inputs = card.querySelectorAll('input[required],select[required]');
+                let done = true;
+                inputs.forEach(inp => {
+                    if (inp.type === 'radio') {
+                        const checked = card.querySelector(`input[name="${inp.name}"]:checked`);
+                        if (!checked) done = false;
+                    } else if (inp.type === 'checkbox') {
+                        if (!inp.checked) done = false;
+                    } else {
+                        if (!inp.value.trim()) done = false;
+                    }
+                });
+                if (steps[i]) steps[i].classList.toggle('done', done);
+                if (steps[i] && i === 0 && done && steps[i].classList.contains('active')) {
+                    steps[i].classList.remove('active');
+                    if (steps[1]) steps[1].classList.add('active');
+                }
+            });
+        }
+        document.getElementById('regForm').addEventListener('input', updateProgress);
+        document.getElementById('regForm').addEventListener('change', updateProgress);
+
+        document.getElementById('noRating').addEventListener('change', function() {
+            const rf = document.getElementById('rating');
+            rf.disabled = this.checked;
+            if (this.checked) rf.value = '';
+        });
+
+        /* ============================================================
+           FORM VALIDATION + SUBMIT
+           ============================================================ */
+        function showErr(name, key) {
+            const el = document.querySelector(`[data-error-for="${name}"]`);
+            if (!el) return;
+            el.querySelector('span').textContent = T[lang][key] || key;
+            el.setAttribute('data-err-key', key);
+            el.classList.add('is-visible');
+            const inp = document.querySelector(`[name="${name}"]`);
+            if (inp) inp.setAttribute('aria-invalid', 'true');
+        }
+
+        function clearErr(name) {
+            const el = document.querySelector(`[data-error-for="${name}"]`);
+            if (!el) return;
+            el.classList.remove('is-visible');
+            const inp = document.querySelector(`[name="${name}"]`);
+            if (inp) inp.removeAttribute('aria-invalid');
+        }
+
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fd = new FormData(this);
+            const d = {
+                fullName: fd.get('fullName') || '',
+                birthDate: fd.get('birthDate') || '',
+                gender: fd.get('gender') || '',
+                category: fd.get('category') || '',
+                fideId: fd.get('fideId') || '',
+                rating: fd.get('rating') || '',
+                noRating: fd.get('noRating') === 'on',
+                club: fd.get('club') || '',
+                phone: fd.get('phone') || '',
+                region: fd.get('region') || '',
+                agree: fd.get('agree') === 'on'
+            };
+            let valid = true;
+            const checks = [
+                ['fullName', !d.fullName.trim(), 'errRequired'],
+                ['birthDate', !d.birthDate, 'errRequired'],
+                ['gender', !d.gender, 'errRequired'],
+                ['category', !d.category, 'errRequired'],
+                ['phone', !d.phone.trim() || d.phone.replace(/\D/g, '').length < 9, d.phone.trim() ?
+                    'errPhone' : 'errRequired'
+                ],
+                ['region', !d.region, 'errRequired'],
+                ['agree', !d.agree, 'errRequired'],
+            ];
+            checks.forEach(([name, bad, key]) => {
+                if (bad) { showErr(name, key);
+                    valid = false; } else clearErr(name);
+            });
+            if (!valid) {
+                const first = document.querySelector('.field__error.is-visible');
+                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            const regNum = genRef();
+            try {
+                const list = JSON.parse(localStorage.getItem('uzchess_participants') || '[]');
+                list.push({ ...d, regNum, at: new Date().toISOString() });
+                localStorage.setItem('uzchess_participants', JSON.stringify(list));
+            } catch (err) {}
+            this.hidden = true;
+            const sp = document.getElementById('successPanel');
+            sp.hidden = false;
+            document.getElementById('refNumber').textContent = regNum;
+            sp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            updateProgress();
+            triggerConfetti();
+        });
+
+        function genRef() {
+            return 'TDK-' + Math.floor(Math.random() * 900 + 100) + '-' + Date.now().toString(36).toUpperCase().slice(-4);
+        }
+
+        function resetForm() {
+            const form = document.getElementById('regForm');
+            form.reset();
+            form.hidden = false;
+            document.getElementById('successPanel').hidden = true;
+            document.querySelectorAll('.field__error').forEach(e => e.classList.remove('is-visible'));
+            document.querySelectorAll('[aria-invalid]').forEach(e => e.removeAttribute('aria-invalid'));
+            updateProgress();
+            document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* ============================================================
+           CONFETTI
+           ============================================================ */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            const colors = ['#C9A84C', '#E8C46A', '#9B1D2E', '#C02538', '#4A9B6F', '#EDE5D0'];
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+                    y: canvas.height * 0.5 + (Math.random() - 0.5) * 100,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: -(Math.random() * 6 + 2),
+                    size: Math.random() * 6 + 3,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 1,
+                    decay: Math.random() * 0.015 + 0.008,
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 8
+                });
+            }
+            let animId;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                particles.forEach(p => {
+                    if (p.life <= 0) return;
+                    alive = true;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.08;
+                    p.life -= p.decay;
+                    p.rotation += p.rotSpeed;
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.life);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.6);
+                    ctx.restore();
+                });
+                if (alive) animId = requestAnimationFrame(draw);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            animId = requestAnimationFrame(draw);
+            setTimeout(() => {
+                if (animId) cancelAnimationFrame(animId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }, 3500);
+        }
+
+        /* ============================================================
+           INIT
+           ============================================================ */
+        applyLang(lang);
+        updateProgress();
+
+        // resize handler for confetti canvas
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confettiCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // keyboard accessibility for clickable nav links
+        document.querySelectorAll('.nav-link, .mobile-nav-link, .footer-links a[onclick]').forEach(el => {
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    el.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
